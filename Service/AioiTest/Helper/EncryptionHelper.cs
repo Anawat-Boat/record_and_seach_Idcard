@@ -39,7 +39,7 @@ namespace AioiTest.Helper
             {
                 aes.Key = GetKeyBytes();
                 byte[] iv = new byte[aes.IV.Length];
-                Array.Copy(fullCipher, iv, iv.Length); // ดึงค่า IV ออกมา
+                Array.Copy(fullCipher, iv, iv.Length);
 
                 using (MemoryStream ms = new MemoryStream(fullCipher, iv.Length, fullCipher.Length - iv.Length))
                 using (CryptoStream cs = new CryptoStream(ms, aes.CreateDecryptor(aes.Key, iv), CryptoStreamMode.Read))

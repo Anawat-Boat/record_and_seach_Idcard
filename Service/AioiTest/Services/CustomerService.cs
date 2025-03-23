@@ -1,4 +1,5 @@
 ﻿using AioiTest.Entity;
+using AioiTest.Helper;
 using AioiTest.Model;
 using AioiTest.Repository;
 
@@ -13,6 +14,10 @@ namespace AioiTest.Services
         }
         public async Task<bool> AddCustomer(CustomerModel customer)
         {
+            if (!Validate.IsValidThaiCitizenId(customer.CitizenId))
+            {
+                throw new Exception("Invalid Citizen ID");
+            }
             TbCustomer tbCustomer = MapDataModel.MapToTbCustomer(customer);
             await _customerRepository.Add(tbCustomer);
             return true;
@@ -34,9 +39,9 @@ namespace AioiTest.Services
             return new CustomerModel(result);
         }
 
-        public async Task<List<CustomerModel>> GetCustomerList()
+        public async Task<List<CustomerModel>> GetCustomerList(string? search)
         {
-            List<TbCustomer> result = await _customerRepository.GetList();
+            List<TbCustomer> result = await _customerRepository.GetList(search);
             if (result.Count <= 0)
             {
                 return new List<CustomerModel>();
@@ -44,10 +49,15 @@ namespace AioiTest.Services
             return MapDataModel.MapToCustomerModel(result);
         }
 
-        public async Task<bool> UpdateCustomer(CustomerModel customer)
+        public async Task<bool> UpdateCustomer(int Id, CustomerModel customer)
         {
+            if (!Validate.IsValidThaiCitizenId(customer.CitizenId))
+            {
+                throw new Exception("Invalid Citizen ID");
+            }
             TbCustomer tbCustomer = MapDataModel.MapToTbCustomer(customer);
-            await _customerRepository.Update(tbCustomer);
+
+            await _customerRepository.Update(Id, tbCustomer);
             return true;
         }
     }
