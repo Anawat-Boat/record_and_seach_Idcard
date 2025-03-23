@@ -1,4 +1,5 @@
-﻿using AioiTest.Model;
+﻿using AioiTest.Entity;
+using AioiTest.Model;
 using AioiTest.Services;
 using Microsoft.AspNetCore.Mvc;
 
@@ -29,12 +30,14 @@ namespace AioiTest.Controllers
             }
         }
 
+       
+
         [HttpGet]
-        public async Task<IActionResult> GetCustomerList()
+        public async Task<IActionResult> GetCustomers(string? search)
         {
             try
             {
-                var response = await _customerService.GetCustomerList();
+                var response = await _customerService.GetCustomerList(search);
                 return Ok(ResponseModel<List<CustomerModel>>.Success(response));
             }
             catch (Exception ex)
@@ -48,7 +51,7 @@ namespace AioiTest.Controllers
         {
             try
             {
-                bool result = await _customerService.AddCustomer(customer);
+                    bool result = await _customerService.AddCustomer(customer);
                 return Ok(ResponseModel<bool>.Success(result));
             }
             catch (Exception ex)
@@ -57,12 +60,12 @@ namespace AioiTest.Controllers
             }
         }
 
-        [HttpPut]
-        public async Task<IActionResult> UpdateCustomer([FromBody] CustomerModel customer)
+        [HttpPut("{id}")]
+        public async Task<IActionResult> UpdateCustomer(int Id ,[FromBody] CustomerModel customer)
         {
             try
             {
-                bool result = await _customerService.UpdateCustomer(customer);
+                bool result = await _customerService.UpdateCustomer(Id,customer);
                 return Ok(ResponseModel<object>.Success(result));
             }
             catch (Exception ex)

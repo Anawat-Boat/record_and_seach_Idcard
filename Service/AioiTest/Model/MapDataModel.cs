@@ -1,5 +1,4 @@
 ﻿using AioiTest.Entity;
-using AioiTest.Helper;
 
 namespace AioiTest.Model
 {
@@ -9,22 +8,13 @@ namespace AioiTest.Model
         {
             return new TbCustomer
             {
-                Id = customer.Id,
+                Id =  customer.Id,
                 FullName = customer.FullName,
-                CitizenId = EncryptionHelper.Encrypt(customer.CitizenId),
+                CitizenId = customer.CitizenId,
                 Address = customer.Address,
                 BirthDate = customer.BirthDate
-            };
-        }
 
-        public static List<TbCustomer> MapToTbCustomers(List<CustomerModel> customers)
-        {
-            List<TbCustomer> reuslt = new List<TbCustomer>();
-            foreach (var customer in customers)
-            {
-                reuslt.Add(MapToTbCustomer(customer));
-            }
-            return reuslt;
+            };
         }
         
         public static List<CustomerModel> MapToCustomerModel(List<TbCustomer> customers)
@@ -36,7 +26,5 @@ namespace AioiTest.Model
             }
             return reuslt;
         }
-
-
     }
 }

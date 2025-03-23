@@ -6,12 +6,16 @@ namespace AioiTest.Entity
     {
         [Key]
         public int Id { get; set; }
-        public string FullName { get; set; }
-        public string CitizenId { get; set; }
-        public string Address { get; set; }
-        public DateTime BirthDate { get; set; }
-        public DateTime CreatedDate { get; set; } = DateTime.Now;
-        public DateTime UpdatedDate { get; set; } = DateTime.Now;
+        [Required]
+        public string FullName { get; set; } = string.Empty;
+        [Required]
+        public string CitizenId { get; set; } = string.Empty;
+        [Required]
+        public string Address { get; set; } = string.Empty;
+        [Required]
+        public DateTime BirthDate { get; set; } 
+        public DateTime CreatedDate { get; set; } = DateTime.Now.ToUniversalTime();
+        public DateTime UpdatedDate { get; set; } = DateTime.Now.ToUniversalTime();
     }
 }
     
